@@ -5,13 +5,16 @@ import "./index.css";
 import "antd/dist/antd.css";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { FallbackLoading } from "./components/Loading";
+import { BrowserRouter } from "react-router-dom";
 
 const App = lazy(() => import("./App"));
 
 ReactDOM.render(
   <ErrorBoundary>
     <Suspense fallback={<FallbackLoading />}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Suspense>
   </ErrorBoundary>,
   document.getElementById("root")
