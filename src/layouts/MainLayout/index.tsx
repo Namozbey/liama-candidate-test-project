@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import "./style.scss";
 import React from "react";
-import { Breadcrumb, Layout, Form, Menu } from "antd";
+import { Breadcrumb, Layout } from "antd";
 
 const { Header, Content, Footer } = Layout;
 
@@ -23,8 +23,7 @@ const Wrapper = (props: Props): JSX.Element => {
       <Content className="content">
         <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
+          <Breadcrumb.Item>Items</Breadcrumb.Item>
         </Breadcrumb>
         <div className="site-layout-content">
           <Component />
