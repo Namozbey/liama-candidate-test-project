@@ -10,7 +10,7 @@ type options = {
   [key: string]: string | number | boolean;
 };
 
-const Layout = (props: Props) => {
+const Wrapper = (props: Props) => {
   const { component: Component } = props;
   return (
     <div className="auth-layout">
@@ -25,5 +25,5 @@ const Layout = (props: Props) => {
 };
 
 export default function authLayout(component: React.FC, options?: options) {
-  return () => <Layout component={component} {...options} />;
+  return () => <Wrapper component={component} {...options} />;
 }
