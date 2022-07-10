@@ -1,15 +1,34 @@
+import { parseCookies } from "nookies";
+
+type headers = {
+  [key: string]: string;
+};
+
 export const request = (
   path: string,
   method: string,
   params?: Params,
-  data?: any
+  data?: any,
+  headers?: headers,
+  isJson = true
 ) => {
+  const { token } = parseCookies();
   const stringParams = makeParamsToString(params);
   const url = process.env.BASE_URL + path + stringParams;
   const xhr = new XMLHttpRequest();
   xhr.open(method, url);
-  xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-  xhr.send(JSON.stringify(data));
+
+  if (token) xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+  if (headers) {
+    for (const key in headers) {
+      xhr.setRequestHeader(key, headers[key]);
+    }
+  } else {
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Accept", "application/json");
+  }
+
+  xhr.send(isJson ? JSON.stringify(data) : data);
 
   return new Promise((resolve, reject) => {
     const timeOut = setTimeout(() => {
@@ -17,9 +36,10 @@ export const request = (
     }, 8000);
 
     xhr.onload = (e) => {
-      // console.log("onload===>", e);
-      // console.log("onload===>", xhr);
-      if (xhr.status >= 400) {
+      if (xhr.status === 401) {
+        reject(xhr.response ? JSON.parse(xhr.response) : null);
+        console.log("unauthored");
+      } else if (xhr.status >= 400) {
         reject(xhr.response ? JSON.parse(xhr.response) : null);
       }
       clearTimeout(timeOut);
