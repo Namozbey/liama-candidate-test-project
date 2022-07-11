@@ -34,8 +34,8 @@ export default function Login(): JSX.Element {
           path: "/",
           expires: new Date(res.expires_at),
         });
-        location.reload();
         history.push("/");
+        location.reload();
       })
       .catch(() => {
         form.setFields([

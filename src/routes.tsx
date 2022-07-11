@@ -39,6 +39,9 @@ export default function Routes(): JSX.Element {
         Other
       </Route>
       <Redirect from="/login" to="/" />
+      <Route path="/login" exact>
+        Login
+      </Route>
       <Route path="*" component={NotFound} />
     </Switch>
   );
