@@ -30,8 +30,8 @@ export default function Dashboard(): JSX.Element {
     getVariations({ size, page })
       .then((res: responce) => setData(res))
       .catch((err) => {
-        console.log(err);
-        message.error("Fetching is error");
+        console.error(err);
+        message.error("Fetching error or time out");
       })
       .finally(() => setIsFetching(false));
   };
