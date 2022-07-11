@@ -1,14 +1,8 @@
 import { request } from "../utils/request";
+import convertQueryToString from "../utils/convertQueryToString";
 
 export const postLogin = (data: Params) => {
-  let body = "";
-  Object.keys(data).forEach((key, i) => {
-    if (i === 0) {
-      body += `${key}=${data[key]}`;
-    } else {
-      body += `&${key}=${data[key]}`;
-    }
-  });
+  const body = convertQueryToString(data);
 
   return request(
     "/security/auth_check",
