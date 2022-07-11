@@ -1,4 +1,6 @@
+import { message } from "antd";
 import { parseCookies } from "nookies";
+import convertQueryToString from "./convertQueryToString";
 
 type headers = {
   [key: string]: string;
@@ -13,7 +15,7 @@ export const request = (
   isJson = true
 ) => {
   const { token } = parseCookies();
-  const stringParams = makeParamsToString(params);
+  const stringParams = "?" + convertQueryToString(params);
   const url = process.env.BASE_URL + path + stringParams;
   const xhr = new XMLHttpRequest();
   xhr.open(method, url);
@@ -33,12 +35,12 @@ export const request = (
   return new Promise((resolve, reject) => {
     const timeOut = setTimeout(() => {
       reject(new Error("time out"));
-    }, 8000);
+    }, 15000);
 
     xhr.onload = (e) => {
       if (xhr.status === 401) {
         reject(xhr.response ? JSON.parse(xhr.response) : null);
-        console.log("unauthored");
+        message.error("Unauthored");
       } else if (xhr.status >= 400) {
         reject(xhr.response ? JSON.parse(xhr.response) : null);
       }
