@@ -38,17 +38,8 @@ export default function Routes(): JSX.Element {
       <Route path="/other" exact>
         Other
       </Route>
-      {/* <Redirect from="/login" to="/" /> */}
-      <Route path="/login" component={RedirectFromLogin} />
+      <Redirect from="/login" to="/" />
       <Route path="*" component={NotFound} />
     </Switch>
   );
 }
-
-const RedirectFromLogin: React.FC = () => {
-  const history = useHistory();
-  useEffect(() => {
-    history.push("/");
-  }, []);
-  return <></>;
-};
