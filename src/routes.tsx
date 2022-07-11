@@ -1,5 +1,5 @@
-import React, { useMemo, lazy } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React, { useMemo, lazy, useEffect } from "react";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { parseCookies } from "nookies";
 import { NotFound } from "./components/Fallbacks";
 import { mainLayout, authLayout } from "./layouts";
@@ -38,11 +38,17 @@ export default function Routes(): JSX.Element {
       <Route path="/other" exact>
         Other
       </Route>
-      <Redirect from="/login" to="/" />
-      <Route path="/login" exact>
-        Login
-      </Route>
+      {/* <Redirect from="/login" to="/" /> */}
+      <Route path="/login" component={RedirectFromLogin} />
       <Route path="*" component={NotFound} />
     </Switch>
   );
 }
+
+const RedirectFromLogin: React.FC = () => {
+  const history = useHistory();
+  useEffect(() => {
+    history.push("/");
+  }, []);
+  return <></>;
+};

@@ -5,7 +5,6 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { subdomain } from "../../constants/basic";
 import { postLogin } from "../../services";
 import { setCookie } from "nookies";
-import { useHistory } from "react-router-dom";
 
 type values = {
   [key: string]: string | number | boolean;
@@ -18,7 +17,6 @@ type responce = {
 };
 
 export default function Login(): JSX.Element {
-  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
@@ -34,7 +32,6 @@ export default function Login(): JSX.Element {
           path: "/",
           expires: new Date(res.expires_at),
         });
-        history.push("/");
         location.reload();
       })
       .catch(() => {
