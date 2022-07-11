@@ -54,13 +54,3 @@ export const request = (
     };
   });
 };
-
-const makeParamsToString = (params: Params) => {
-  if (!params) return "";
-  let _params = "";
-  Object.keys(params).forEach((key, i) => {
-    if (i === 0) _params += `?${key}=${params[key]}`;
-    else _params += `&${key}=${params[key]}`;
-  });
-  return _params;
-};
