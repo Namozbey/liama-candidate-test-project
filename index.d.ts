@@ -6,7 +6,7 @@ declare module "*.svg";
 declare module "*.webp";
 
 type Params = {
-  [key: string]: string | number | boolean;
+  [key: string]: any;
 };
 
 type Property = {
