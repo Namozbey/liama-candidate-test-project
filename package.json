@@ -1,5 +1,5 @@
 {
-  "name": "global_mentoring_program",
+  "name": "ox-task",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Namozbey/reactjs_global_mentoring_tasks.git"
+    "url": "git+https://github.com/Namozbey/ox-task.git"
   },
   "author": "Namoz Ostonaev",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Namozbey/reactjs_global_mentoring_tasks/issues"
+    "url": "https://github.com/Namozbey/ox-task/issues"
   },
-  "homepage": "https://github.com/Namozbey/reactjs_global_mentoring_tasks#readme",
+  "homepage": ".",
   "dependencies": {
     "antd": "^4.21.5",
     "identity-obj-proxy": "^3.0.0",
