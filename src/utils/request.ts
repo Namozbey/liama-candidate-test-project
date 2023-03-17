@@ -1,26 +1,24 @@
 import { message } from "antd";
-import { parseCookies } from "nookies";
 import convertQueryToString from "./convertQueryToString";
 
 type headers = {
   [key: string]: string;
 };
 
-export const request = (
+export function request<Res = any>(
   path: string,
-  method: string,
+  method: "get" | "put" | "post" | "patch" | "delete",
   params?: Params,
   data?: any,
   headers?: headers,
   isJson = true
-) => {
-  const { token } = parseCookies();
-  const stringParams = "?" + convertQueryToString(params);
+): Promise<Res> {
+  const stringParams = params ? `?${convertQueryToString(params)}` : "";
+
   const url = process.env.BASE_URL + path + stringParams;
   const xhr = new XMLHttpRequest();
   xhr.open(method, url);
 
-  if (token) xhr.setRequestHeader("Authorization", `Bearer ${token}`);
   if (headers) {
     for (const key in headers) {
       xhr.setRequestHeader(key, headers[key]);
@@ -37,7 +35,7 @@ export const request = (
       reject(new Error("time out"));
     }, 15000);
 
-    xhr.onload = (e) => {
+    xhr.onload = () => {
       if (xhr.status === 401) {
         reject(xhr.response ? JSON.parse(xhr.response) : null);
         message.error("Unauthored");
@@ -53,4 +51,4 @@ export const request = (
       reject(err);
     };
   });
-};
+}

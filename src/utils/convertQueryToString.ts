@@ -3,9 +3,9 @@ export default function convertQueryToString(params: Params) {
   const keys = Object.keys(params);
 
   if (!keys.length) return "";
-  return keys.reduce(
-    (prev, key, i) =>
-      i === 0 ? `${key}=${params[key]}` : `${prev}&${key}=${params[key]}`,
-    ""
-  );
+  return keys.reduce((prev, key, i) => {
+    if (!params[key]) return prev;
+    if (i === 0) return `${key}=${params[key]}`;
+    return `${prev}&${key}=${params[key]}`;
+  }, "");
 }
