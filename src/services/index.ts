@@ -1,2 +1,1 @@
-export * from "./variations";
-export * from "./login";
+export * from "./products";
