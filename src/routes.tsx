@@ -1,37 +1,21 @@
-import React, { useMemo, lazy, useEffect } from "react";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
-import { parseCookies } from "nookies";
+import React, { lazy } from "react";
 import { NotFound } from "./components/Fallbacks";
-import { mainLayout, authLayout } from "./layouts";
+import { mainLayout } from "./layouts";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 export default function Routes(): JSX.Element {
-  const token = useMemo(() => {
-    const { token } = parseCookies();
-    return token;
-  }, []);
-
-  if (!token) {
-    return (
-      <Switch>
-        <Route
-          path="/login"
-          component={authLayout(lazy(() => import("./views/Login")))}
-        />
-        <Redirect from="*" to="/login" />
-      </Switch>
-    );
-  }
-
   return (
     <Switch>
+      <Redirect exact from="/" to="/products" />
+      <Route
+        path="/products"
+        component={mainLayout(lazy(() => import("./views/products")))}
+      />
       <Route
         exact
-        path="/"
-        component={mainLayout(lazy(() => import("./views/Dashboard")))}
+        path="/home"
+        component={mainLayout(lazy(() => import("./views/home")))}
       />
-      <Route path="/user" exact>
-        User
-      </Route>
       <Route path="/admin" exact>
         Admin
       </Route>
