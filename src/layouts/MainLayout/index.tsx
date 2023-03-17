@@ -1,9 +1,9 @@
 /* eslint-disable react/display-name */
 import "./style.scss";
-import React, { useState } from "react";
-import { destroyCookie } from "nookies";
-import { LogoutOutlined } from "@ant-design/icons";
-import { Breadcrumb, Layout, Button, Tooltip, Popover } from "antd";
+import React, { useMemo } from "react";
+import { Breadcrumb, Layout } from "antd";
+import { useLocation } from "react-router-dom";
+import makeTitleCase from "../../utils/makeTitleCase";
 
 const { Header, Content, Footer } = Layout;
 
@@ -17,31 +17,11 @@ type options = {
 
 const Wrapper = (props: Props): JSX.Element => {
   const { component: Component } = props;
-  const [visible, setVisible] = useState(false);
+  const location = useLocation();
 
-  const hide = () => {
-    setVisible(false);
-  };
-
-  const handleVisibleChange = (newVisible: boolean) => {
-    setVisible(newVisible);
-  };
-
-  const logOut = () => {
-    destroyCookie(null, "token");
-    location.reload();
-  };
-
-  const popoverContent = (
-    <div className="logout-popover">
-      <Button size="small" type="link" onClick={hide}>
-        Cancel
-      </Button>
-      <Button size="small" type="primary" onClick={logOut}>
-        Yes
-      </Button>
-    </div>
-  );
+  const breadcrumbOptions = useMemo(() => {
+    return location.pathname.split("/");
+  }, [location]);
 
   return (
     <Layout className="main-layout">
@@ -49,34 +29,27 @@ const Wrapper = (props: Props): JSX.Element => {
         <div className="logo">Logo</div>
         <div className="right-content">
           <p>John Doe</p>
-          <Popover
-            trigger="focus"
-            title="Do you really want to log out?"
-            visible={visible}
-            content={popoverContent}
-            onVisibleChange={handleVisibleChange}
-          >
-            <Tooltip title="Log out">
-              <Button
-                icon={<LogoutOutlined className="logout-icon" />}
-                type="text"
-              />
-            </Tooltip>
-          </Popover>
         </div>
       </Header>
       <Content className="content">
         <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>Items</Breadcrumb.Item>
+          {breadcrumbOptions.map((route, i) =>
+            i === 0 ? (
+              <Breadcrumb.Item key="home" href="/">
+                Home
+              </Breadcrumb.Item>
+            ) : route ? (
+              <Breadcrumb.Item key={route} href={"/" + route}>
+                {makeTitleCase(route)}
+              </Breadcrumb.Item>
+            ) : undefined
+          )}
         </Breadcrumb>
         <div className="site-layout-content">
           <Component />
         </div>
       </Content>
-      <Footer style={{ textAlign: "center" }}>
-        Ant Design ©2018 Created by Ant UED
-      </Footer>
+      <Footer style={{ textAlign: "center" }}>© Namoz Ostonaev</Footer>
     </Layout>
   );
 };
