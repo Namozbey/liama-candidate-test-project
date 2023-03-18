@@ -25,4 +25,4 @@ export const patchProduct = ({ params, data, id }: PostPropsType) =>
   request<ProductType>(`/products/${id}`, "patch", params, data);
 
 export const deleteProduct = ({ params, id }: GetPropsType) =>
-  request<any>(`/products/${id}`, "delete", params);
+  request<ProductType>(`/products/${id}`, "delete", params);
