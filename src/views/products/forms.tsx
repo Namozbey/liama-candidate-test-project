@@ -50,7 +50,7 @@ export default function ProductForm({ fetchItems }: Props) {
       data: values,
       id: +product_id,
     })
-      .then((res) => {
+      .then(() => {
         message.success("Success");
         fetchItems();
         closeDrawer();

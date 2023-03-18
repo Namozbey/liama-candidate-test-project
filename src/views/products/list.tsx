@@ -172,11 +172,12 @@ export default function ProductsList({
               <Card style={{ marginBottom: 24 }}>
                 <Image
                   height={250}
+                  width="100%"
                   alt="product-image"
                   src={imageSrc}
                   fallback={noImage}
                   preview={false}
-                  style={{ objectFit: "cover" }}
+                  style={{ objectFit: "contain" }}
                 />
                 <Title level={5} style={{ marginTop: 16 }}>
                   {marker(name, search)}
