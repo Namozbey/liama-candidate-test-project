@@ -28,3 +28,5 @@ npm run start:dev
 # To build for production
 npm run built:prod
 ```
+
+> In order to Pagination work, there should be more than 12 items (default limit is 12)
